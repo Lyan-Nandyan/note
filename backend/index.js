@@ -14,6 +14,7 @@ app.use(cors({
   credentials: true,
 }));
 app.use(express.json());
+app.get("/", (req, res) => res.render("index"));
 app.use(NoteRoute);
 app.use(UserRoute);
 
