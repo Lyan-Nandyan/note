@@ -10,7 +10,12 @@ const EditNote = () => {
     const { id } = useParams();
 
     useEffect(() => {
-        getNoteById();
+        const token = localStorage.getItem("accessToken");
+        if (!token) {
+            navigate("/login");
+        } else {
+            getNoteById();
+        }
     }, []);
 
     const updateNote = async (e) => {

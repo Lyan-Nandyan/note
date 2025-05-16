@@ -12,8 +12,8 @@ function App() {
       <Route path="/" element={<NoteList/>}/>
       <Route path="add" element={<AddNote/>}/>
       <Route path="edit/:id" element={<EditNote/>}/>
-      <Route path="register" element={<Register/>}/>
-      <Route path="login" element={<Login/>}/>
+      <Route path="/register" element={<Register/>}/>
+      <Route path="/login" element={<Login/>}/>
     </Routes>
     </BrowserRouter>
   );

@@ -8,7 +8,12 @@ const NoteList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getNotes();
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      navigate("/login");
+    } else {
+      getNotes();
+    }
   }, []);
 
   const handleLogout = async () => {
