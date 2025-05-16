@@ -9,7 +9,10 @@ dotenv.config();
 
 const app = express();
 app.use(cookieParser());
-//app.use(cors({credentials:true, origin:"https://lyan-frontend-dot-f-02-450706.uc.r.appspot.com"}));
+app.use(cors({
+  origin: "https://lyan-frontend-dot-f-02-450706.uc.r.appspot.com",
+  credentials: true,
+}));
 app.use(express.json());
 app.use(NoteRoute);
 app.use(UserRoute);
