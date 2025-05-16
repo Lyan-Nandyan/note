@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import axiosJWT from '../utils/axiosJWT';  // Import axiosJWT yang sudah disesuaikan dengan token
 import { useNavigate, useParams } from 'react-router-dom';
 import { BASE_URL } from "../utils";
 
@@ -16,20 +16,31 @@ const EditNote = () => {
     const updateNote = async (e) => {
         e.preventDefault();
         try {
-            await axios.patch(`${BASE_URL}/notes/${id}`, {
+            // Menggunakan axiosJWT untuk mengirimkan token saat memperbarui catatan
+            await axiosJWT.patch(`${BASE_URL}/notes/${id}`, {
                 title,
                 body
+            }, {
+                withCredentials: true  // pastikan cookies (termasuk refresh token) dikirim
             });
-            navigate("/");
+            navigate("/");  // Arahkan kembali ke halaman utama setelah berhasil
         } catch (error) {
             console.log(error);
+            // Penanganan error bisa diperbaiki lebih lanjut
         }
     }
 
     const getNoteById = async () => {
-        const response = await axios.get(`${BASE_URL}/notes/${id}`);
-        setTitle(response.data.title);
-        setBody(response.data.body);
+        try {
+            const response = await axiosJWT.get(`${BASE_URL}/notes/${id}`, {
+                withCredentials: true  // pastikan cookies dikirim untuk mendapatkan data yang benar
+            });
+            setTitle(response.data.title);
+            setBody(response.data.body);
+        } catch (error) {
+            console.log(error);
+            // Penanganan error jika gagal mengambil data catatan
+        }
     }
 
     return (
@@ -39,7 +50,14 @@ const EditNote = () => {
                     <div className="field">
                         <label className='label'>Title</label>
                         <div className="control">
-                            <input type="text" className='input' value={title} onChange={(e) => setTitle(e.target.value)} placeholder='Title' />
+                            <input
+                                type="text"
+                                className='input'
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                placeholder='Title'
+                                required
+                            />
                         </div>
                     </div>
                     <div className="field">
@@ -50,6 +68,7 @@ const EditNote = () => {
                                 value={body}
                                 onChange={(e) => setBody(e.target.value)}
                                 placeholder='Note'
+                                required
                             ></textarea>
                         </div>
                     </div>
@@ -64,4 +83,4 @@ const EditNote = () => {
     )
 }
 
-export default EditNote
+export default EditNote;
