@@ -4,7 +4,7 @@ import { verifyToken } from "../middleware/VerifyToken.js";
 
 const router = express.Router();
 
-router.get('/notes',verifyToken, getNotes);
+router.get('/notes', getNotes);
 router.get('/notes/:id',verifyToken, getNotesById);
 router.post('/notes',verifyToken, createNotes);
 router.patch('/notes/:id',verifyToken, updateNote);
