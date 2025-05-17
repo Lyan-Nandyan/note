@@ -12,12 +12,13 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`${BASE_URL}/login`, {
+      const response = await axios.post(`${BASE_URL}/login`, {
         email,
         password
       }, {
         withCredentials: true
       });
+
       localStorage.setItem("accessToken", response.data.accessToken);
       navigate('/');
     } catch (error) {
