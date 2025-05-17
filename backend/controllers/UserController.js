@@ -130,7 +130,6 @@ async function loginHandler(req, res) {
         res.cookie("refreshToken", refreshToken, {
           httpOnly: true,
           secure: true, // HTTPS wajib
-          sameSite: "None", // Cross-site
           maxAge: 24 * 60 * 60 * 1000,
         });
         res.status(200).json({
