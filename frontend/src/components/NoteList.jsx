@@ -7,6 +7,20 @@ const NoteList = () => {
   const [notes, setNotes] = useState([]);
   const navigate = useNavigate();
 
+  const getNotes = async () => {
+    try {
+      const response = await axiosJWT.get(`${BASE_URL}/notes`, {
+        withCredentials: true
+      });
+      setNotes(response.data);
+    } catch (error) {
+      console.error("Gagal memuat catatan:", error);
+      if (error.response && error.response.status === 401) {
+        navigate("/login");
+      }
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     if (!token) {
@@ -14,7 +28,7 @@ const NoteList = () => {
     } else {
       getNotes();
     }
-  }, [getNotes, navigate]);
+  }, [navigate]);
 
   const handleLogout = async () => {
     try {
@@ -27,20 +41,6 @@ const NoteList = () => {
       navigate('/login');
     } catch (error) {
       console.error("Logout gagal:", error);
-    }
-  };
-
-  const getNotes = async () => {
-    try {
-      const response = await axiosJWT.get(`${BASE_URL}/notes`, {
-        withCredentials: true
-      });
-      setNotes(response.data);
-    } catch (error) {
-      console.error("Gagal memuat catatan:", error);
-      if (error.response && error.response.status === 401) {
-        navigate("/login");
-      }
     }
   };
 

@@ -10,13 +10,25 @@ const EditNote = () => {
     const { id } = useParams();
 
     useEffect(() => {
+        const getNoteById = async () => {
+            try {
+                const response = await axiosJWT.get(`${BASE_URL}/notes/${id}`, {
+                    withCredentials: true
+                });
+                setTitle(response.data.title);
+                setBody(response.data.body);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
         const token = localStorage.getItem("accessToken");
         if (!token) {
             navigate("/login");
         } else {
             getNoteById();
         }
-    }, [getNoteById, navigate]);
+    }, [id, navigate]);
 
     const updateNote = async (e) => {
         e.preventDefault();
@@ -32,19 +44,6 @@ const EditNote = () => {
         } catch (error) {
             console.log(error);
             // Penanganan error bisa diperbaiki lebih lanjut
-        }
-    }
-
-    const getNoteById = async () => {
-        try {
-            const response = await axiosJWT.get(`${BASE_URL}/notes/${id}`, {
-                withCredentials: true  // pastikan cookies dikirim untuk mendapatkan data yang benar
-            });
-            setTitle(response.data.title);
-            setBody(response.data.body);
-        } catch (error) {
-            console.log(error);
-            // Penanganan error jika gagal mengambil data catatan
         }
     }
 
