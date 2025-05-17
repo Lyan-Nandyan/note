@@ -3,12 +3,18 @@ service: lyan-frontend
 instance_class: F1
 
 handlers:
-  - url: /
+  # Semua file statis seperti JS, CSS, gambar, dll
+  - url: /(.*\.(js|css|png|jpg|svg|ico|json|txt|woff2?|ttf|map))
+    static_files: build/\1
+    upload: build/.*
+
+  # Folder static (umumnya isi build/static)
+  - url: /static
+    static_dir: build/static
+
+  # Untuk semua URL lain arahkan ke index.html (fallback ke React)
+  - url: /.*
     static_files: build/index.html
     upload: build/index.html
-
-  - url: /(.*)
-    static_files: build/\1
-    upload: build/(.*)
 
 default_expiration: "1h"
