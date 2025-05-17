@@ -18,6 +18,7 @@ const Login = () => {
       }, {
         withCredentials: true
       });
+      localStorage.setItem("accessToken", response.data.accessToken);
       navigate('/');
     } catch (error) {
       setMsg(error.response?.data?.msg || 'Login gagal');
