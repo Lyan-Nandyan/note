@@ -3,13 +3,12 @@ service: lyan-frontend
 instance_class: F1
 
 handlers:
-  # Tangani semua permintaan dengan index.html (SPA fallback)
-  - url: /.*
+  - url: /
     static_files: build/index.html
     upload: build/index.html
 
-  # Tangani file statis (JS, CSS, gambar, dll.)
-  - url: /
-    static_dir: build
+  - url: /(.*)
+    static_files: build/\1
+    upload: build/(.*)
 
 default_expiration: "1h"
