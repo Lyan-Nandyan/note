@@ -128,10 +128,10 @@ async function loginHandler(req, res) {
           }
         );
         res.cookie("refreshToken", refreshToken, {
-          httpOnly: true, // Untuk menghindari XSS
-          sameSite: "None", // Untuk cross-site requests
-          secure: true, // Pastikan hanya digunakan di HTTPS (https://)
-          maxAge: 24 * 60 * 60 * 1000, // 1 hari
+          httpOnly: true,
+          secure: true, // HTTPS wajib
+          sameSite: "None", // Cross-site
+          maxAge: 24 * 60 * 60 * 1000,
         });
         res.status(200).json({
           status: "Succes",
