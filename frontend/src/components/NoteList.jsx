@@ -14,7 +14,7 @@ const NoteList = () => {
     } else {
       getNotes();
     }
-  }, []);
+  }, [getNotes, navigate]);
 
   const handleLogout = async () => {
     try {

@@ -3,7 +3,8 @@ service: lyan-frontend
 instance_class: F1
 
 handlers:
-  - url: /
+  
+  - url: /.*
     static_files: build/index.html
     upload: build/index.html
 

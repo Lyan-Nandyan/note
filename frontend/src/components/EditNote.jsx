@@ -16,7 +16,7 @@ const EditNote = () => {
         } else {
             getNoteById();
         }
-    }, []);
+    }, [getNoteById, navigate]);
 
     const updateNote = async (e) => {
         e.preventDefault();
